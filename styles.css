@@ -748,18 +748,15 @@ textarea:focus-visible {
   margin: 12px 0 0;
 }
 
-.hidden-frame {
-  border: 0;
-  height: 0;
-  position: absolute;
-  width: 0;
-}
-
 .request-form {
   display: grid;
   gap: 14px;
   margin: 0 auto;
   max-width: 980px;
+}
+
+.honeypot {
+  display: none;
 }
 
 .request-form label,
@@ -839,6 +836,47 @@ textarea:focus-visible {
 
 .full {
   grid-column: 1 / -1;
+}
+
+.thanks-page {
+  background:
+    radial-gradient(circle at 20% 12%, rgba(15, 159, 114, 0.14), transparent 28%),
+    linear-gradient(135deg, #f5fbf8 0%, #ffffff 42%, #eef5f8 100%);
+  min-height: 100vh;
+}
+
+.thanks-shell {
+  display: grid;
+  gap: 40px;
+  margin: 0 auto;
+  max-width: 880px;
+  min-height: 100vh;
+  padding: 34px 22px;
+  place-content: center;
+}
+
+.thanks-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: clamp(28px, 6vw, 56px);
+}
+
+.thanks-card h1 {
+  color: var(--navy);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  letter-spacing: 0;
+  line-height: 0.98;
+  margin: 0 0 18px;
+}
+
+.thanks-card p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0 0 26px;
+  max-width: 620px;
 }
 
 .floating-whatsapp {

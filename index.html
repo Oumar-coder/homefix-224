@@ -315,18 +315,21 @@
             message WhatsApp pour accélérer le suivi.
           </p>
         </div>
-        <iframe class="hidden-frame" name="notification-target" title="Envoi de notification"></iframe>
         <form
           class="request-form"
-          action="https://formsubmit.co/homefix224@gmail.com"
+          name="demande-service-homefix"
+          action="/merci"
           method="POST"
-          target="notification-target"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
         >
-          <input type="hidden" name="_subject" value="Nouvelle demande de service HomeFix 224" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="form-name" value="demande-service-homefix" />
+          <input type="hidden" name="subject" value="Nouvelle demande de service HomeFix 224" />
           <input type="hidden" name="Ville" value="Conakry" />
           <input type="hidden" name="Email destination" value="homefix224@gmail.com" />
+          <p class="honeypot">
+            <label>Ne pas remplir ce champ <input name="bot-field" /></label>
+          </p>
           <label>
             Nom complet
             <input id="name" name="Nom" type="text" autocomplete="name" placeholder="Votre nom" required />
@@ -375,7 +378,7 @@
             ></textarea>
           </label>
           <p class="form-note full">
-            Notification prévue vers <strong>homefix224@gmail.com</strong>. Une fenêtre WhatsApp s’ouvrira aussi avec votre message prérempli.
+            Demande enregistrée par HomeFix 224. Une fenêtre WhatsApp s’ouvrira aussi avec votre message prérempli.
           </p>
           <p class="form-status full" role="status" aria-live="polite"></p>
           <button class="button button-primary full" type="submit">Envoyer la demande</button>
