@@ -96,6 +96,8 @@ const serviceWhatsapp = document.querySelector("#service-whatsapp");
 const whatsappLinks = document.querySelectorAll("[data-whatsapp-link]");
 const urgentLink = document.querySelector("[data-urgent-link]");
 const planLink = document.querySelector("[data-plan-link]");
+const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+const mobileMenu = document.querySelector("#mobile-menu");
 
 function encodeWhatsAppMessage(data = baseMessage) {
   const lines = [
@@ -170,6 +172,39 @@ function updateServicePanel(serviceName, shouldScroll = false) {
     servicePanel.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
+
+function setMobileMenu(isOpen) {
+  if (!mobileMenu || !mobileMenuToggle) {
+    return;
+  }
+
+  mobileMenu.classList.toggle("is-open", isOpen);
+  mobileMenu.setAttribute("aria-hidden", isOpen ? "false" : "true");
+  mobileMenu.inert = !isOpen;
+  mobileMenuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  mobileMenuToggle.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+}
+
+mobileMenuToggle?.addEventListener("click", () => {
+  const isOpen = mobileMenuToggle.getAttribute("aria-expanded") === "true";
+  setMobileMenu(!isOpen);
+});
+
+mobileMenu?.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => setMobileMenu(false));
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    setMobileMenu(false);
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.matchMedia("(min-width: 940px)").matches) {
+    setMobileMenu(false);
+  }
+});
 
 document.querySelectorAll(".service-card").forEach((card) => {
   card.addEventListener("click", () => {
