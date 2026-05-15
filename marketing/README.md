@@ -21,6 +21,7 @@
 - `logo-homefix-224.svg` : logo horizontal vectoriel.
 - `logo-mark-homefix-224.svg` : logo carré vectoriel.
 - `launch-kit.html` : artboards HTML/CSS utilisés pour exporter les PNG.
+- `source-images/` : images réalistes HomeFix utilisées dans les publicités et statuts.
 
 ## Export
 

@@ -141,6 +141,26 @@
         background-image: linear-gradient(90deg, rgba(7, 29, 55, 0.74), rgba(7, 29, 55, 0.1)), var(--image);
       }
 
+      .photo.soft {
+        background-image: linear-gradient(90deg, rgba(7, 29, 55, 0.82), rgba(7, 29, 55, 0.16)), var(--image);
+      }
+
+      .photo.deep {
+        background-image: linear-gradient(180deg, rgba(7, 29, 55, 0.2), rgba(7, 29, 55, 0.88)), var(--image);
+      }
+
+      .photo.left {
+        background-position: left center;
+      }
+
+      .photo.right {
+        background-position: right center;
+      }
+
+      .photo.top {
+        background-position: center top;
+      }
+
       h1,
       h2,
       p {
@@ -228,7 +248,7 @@
       }
 
       .cover {
-        --image: url("../assets/homefix-hero-v2.webp");
+        --image: url("source-images/accueil-client-devis.png");
         height: 924px;
         padding: 72px 86px;
         width: 1640px;
@@ -272,17 +292,15 @@
       }
 
       .plumbing {
-        --image: url("../assets/homefix-hero-v2.webp");
+        --image: url("source-images/plomberie-urgence.png");
       }
 
       .electric {
-        background:
-          radial-gradient(circle at 86% 18%, rgba(244, 179, 61, 0.32), transparent 28%),
-          linear-gradient(135deg, var(--navy) 0%, #0f3a65 100%);
+        --image: url("source-images/electricite-tableau.png");
       }
 
       .maintenance-ad {
-        --image: url("../assets/homefix-team.webp");
+        --image: url("source-images/nettoyage-bureau.png");
       }
 
       .icon-burst {
@@ -333,17 +351,15 @@
       }
 
       .story-urgent {
-        --image: url("../assets/homefix-hero-v2.webp");
+        --image: url("source-images/diagnostic-client-photo.png");
       }
 
       .story-services {
-        background:
-          radial-gradient(circle at 82% 12%, rgba(15, 159, 114, 0.36), transparent 24%),
-          linear-gradient(160deg, var(--navy) 0%, #0d2b4f 56%, #0f9f72 140%);
+        --image: url("source-images/equipe-homefix-outils.png");
       }
 
       .flyer {
-        --image: url("../assets/homefix-team.webp");
+        --image: url("source-images/diagnostic-client-photo.png");
         height: 1350px;
         padding: 64px;
         width: 1080px;
@@ -378,7 +394,7 @@
       </section>
 
       <section class="artboard cover" id="facebook-cover">
-        <div class="photo light"></div>
+        <div class="photo light right"></div>
         <div class="cover-content">
           <div class="brand-row">
             <div class="brand-mark">
@@ -399,7 +415,7 @@
       </section>
 
       <section class="artboard square plumbing" id="ad-plomberie">
-        <div class="photo"></div>
+        <div class="photo deep"></div>
         <div class="content">
           <div class="brand-row">
             <div class="brand-mark">
@@ -420,6 +436,7 @@
       </section>
 
       <section class="artboard square electric" id="ad-electricite-clim">
+        <div class="photo deep left"></div>
         <div class="icon-burst">⚡</div>
         <div class="content">
           <div class="brand-row">
@@ -441,7 +458,7 @@
       </section>
 
       <section class="artboard square maintenance-ad" id="ad-maintenance">
-        <div class="photo"></div>
+        <div class="photo soft left"></div>
         <div class="content">
           <div class="brand-row">
             <div class="brand-mark">
@@ -461,7 +478,7 @@
       </section>
 
       <section class="artboard story story-urgent" id="status-urgence">
-        <div class="photo"></div>
+        <div class="photo deep top"></div>
         <div class="content">
           <div class="brand-row">
             <div class="brand-mark">
@@ -482,6 +499,7 @@
       </section>
 
       <section class="artboard story story-services" id="status-services">
+        <div class="photo deep"></div>
         <div class="content">
           <div class="brand-row">
             <div class="brand-mark">
@@ -510,7 +528,7 @@
       </section>
 
       <section class="artboard flyer" id="flyer-digital">
-        <div class="photo"></div>
+        <div class="photo soft"></div>
         <div class="content">
           <div class="brand-row">
             <div class="brand-mark">
