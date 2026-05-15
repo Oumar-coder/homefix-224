@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeFix 224 - Kit de lancement</title>
+    <style>
+      :root {
+        --navy: #071d37;
+        --navy-2: #0d2b4f;
+        --green: #0f9f72;
+        --green-2: #13b981;
+        --amber: #f4b33d;
+        --text: #102034;
+        --muted: #d8e5ef;
+        --white: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #e8eef5;
+        font-family: Inter, Arial, sans-serif;
+        margin: 0;
+        padding: 40px;
+      }
+
+      .gallery {
+        display: grid;
+        gap: 40px;
+      }
+
+      .artboard {
+        background: var(--white);
+        color: var(--text);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .brand-row {
+        align-items: center;
+        display: flex;
+        gap: 22px;
+        position: relative;
+        z-index: 3;
+      }
+
+      .brand-mark {
+        background: var(--white);
+        border-radius: 28px;
+        display: grid;
+        height: 98px;
+        place-items: center;
+        width: 98px;
+      }
+
+      .brand-mark svg {
+        height: 70px;
+        width: 70px;
+      }
+
+      .brand-name {
+        color: var(--white);
+        display: grid;
+        font-size: 48px;
+        font-weight: 950;
+        letter-spacing: 0;
+        line-height: 0.92;
+      }
+
+      .brand-name strong {
+        color: var(--amber);
+      }
+
+      .brand-name small {
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 900;
+        letter-spacing: 6px;
+        margin-top: 14px;
+        text-transform: uppercase;
+      }
+
+      .tag {
+        align-self: start;
+        background: rgba(244, 179, 61, 0.16);
+        border: 2px solid rgba(244, 179, 61, 0.45);
+        border-radius: 999px;
+        color: var(--amber);
+        display: inline-flex;
+        font-size: 24px;
+        font-weight: 950;
+        justify-self: start;
+        padding: 14px 22px;
+        position: relative;
+        z-index: 3;
+      }
+
+      .cta {
+        align-items: center;
+        background: linear-gradient(135deg, var(--green), var(--green-2));
+        border-radius: 999px;
+        color: var(--white);
+        display: inline-flex;
+        font-size: 34px;
+        font-weight: 950;
+        gap: 16px;
+        justify-self: start;
+        padding: 24px 34px;
+        position: relative;
+        z-index: 3;
+      }
+
+      .cta::before {
+        background: var(--white);
+        border-radius: 50%;
+        content: "";
+        height: 18px;
+        width: 18px;
+      }
+
+      .contact {
+        color: var(--white);
+        font-size: 28px;
+        font-weight: 900;
+        position: relative;
+        z-index: 3;
+      }
+
+      .photo {
+        background-image: linear-gradient(90deg, rgba(7, 29, 55, 0.92), rgba(7, 29, 55, 0.36)), var(--image);
+        background-position: center;
+        background-size: cover;
+        inset: 0;
+        position: absolute;
+      }
+
+      .photo.light {
+        background-image: linear-gradient(90deg, rgba(7, 29, 55, 0.74), rgba(7, 29, 55, 0.1)), var(--image);
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+        position: relative;
+        z-index: 3;
+      }
+
+      h1 {
+        color: var(--white);
+        font-size: 86px;
+        font-weight: 950;
+        letter-spacing: 0;
+        line-height: 0.94;
+        max-width: 760px;
+      }
+
+      h1 em {
+        color: var(--amber);
+        font-family: Georgia, "Times New Roman", serif;
+        font-style: italic;
+      }
+
+      h2 {
+        color: var(--white);
+        font-size: 72px;
+        font-weight: 950;
+        letter-spacing: 0;
+        line-height: 0.96;
+      }
+
+      p {
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 1.28;
+        max-width: 720px;
+      }
+
+      .service-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        position: relative;
+        z-index: 3;
+      }
+
+      .service-pills span {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 999px;
+        color: var(--white);
+        font-size: 24px;
+        font-weight: 900;
+        padding: 12px 18px;
+      }
+
+      .logo-main {
+        align-items: center;
+        background: transparent;
+        display: flex;
+        height: 420px;
+        justify-content: center;
+        width: 1400px;
+      }
+
+      .logo-main img {
+        height: 420px;
+        width: 1400px;
+      }
+
+      .avatar {
+        align-items: center;
+        background: radial-gradient(circle at 30% 18%, rgba(244, 179, 61, 0.25), transparent 28%), var(--navy);
+        display: grid;
+        height: 1080px;
+        justify-items: center;
+        padding: 96px;
+        width: 1080px;
+      }
+
+      .avatar img {
+        height: 820px;
+        width: 820px;
+      }
+
+      .cover {
+        --image: url("../assets/homefix-hero-v2.webp");
+        height: 924px;
+        padding: 72px 86px;
+        width: 1640px;
+      }
+
+      .cover-content {
+        display: grid;
+        gap: 38px;
+        height: 100%;
+        position: relative;
+        z-index: 3;
+      }
+
+      .cover h1 {
+        font-size: 92px;
+        margin-top: auto;
+      }
+
+      .cover .bottom-row {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .square {
+        height: 1080px;
+        padding: 64px;
+        width: 1080px;
+      }
+
+      .square .content {
+        display: grid;
+        gap: 34px;
+        height: 100%;
+        position: relative;
+        z-index: 3;
+      }
+
+      .square h2 {
+        margin-top: auto;
+      }
+
+      .plumbing {
+        --image: url("../assets/homefix-hero-v2.webp");
+      }
+
+      .electric {
+        background:
+          radial-gradient(circle at 86% 18%, rgba(244, 179, 61, 0.32), transparent 28%),
+          linear-gradient(135deg, var(--navy) 0%, #0f3a65 100%);
+      }
+
+      .maintenance-ad {
+        --image: url("../assets/homefix-team.webp");
+      }
+
+      .icon-burst {
+        align-items: center;
+        background: rgba(255, 255, 255, 0.12);
+        border: 2px solid rgba(255, 255, 255, 0.18);
+        border-radius: 50%;
+        color: var(--amber);
+        display: flex;
+        font-size: 122px;
+        font-weight: 950;
+        height: 230px;
+        justify-content: center;
+        position: absolute;
+        right: 70px;
+        top: 186px;
+        width: 230px;
+        z-index: 3;
+      }
+
+      .story {
+        height: 1920px;
+        padding: 86px 64px;
+        width: 1080px;
+      }
+
+      .story .content {
+        display: grid;
+        gap: 42px;
+        height: 100%;
+        position: relative;
+        z-index: 3;
+      }
+
+      .story h2 {
+        font-size: 104px;
+        margin-top: auto;
+      }
+
+      .story p {
+        font-size: 38px;
+      }
+
+      .story .cta {
+        align-self: start;
+        font-size: 42px;
+        padding: 30px 42px;
+      }
+
+      .story-urgent {
+        --image: url("../assets/homefix-hero-v2.webp");
+      }
+
+      .story-services {
+        background:
+          radial-gradient(circle at 82% 12%, rgba(15, 159, 114, 0.36), transparent 24%),
+          linear-gradient(160deg, var(--navy) 0%, #0d2b4f 56%, #0f9f72 140%);
+      }
+
+      .flyer {
+        --image: url("../assets/homefix-team.webp");
+        height: 1350px;
+        padding: 64px;
+        width: 1080px;
+      }
+
+      .flyer .content {
+        display: grid;
+        gap: 34px;
+        height: 100%;
+        position: relative;
+        z-index: 3;
+      }
+
+      .flyer h2 {
+        font-size: 80px;
+        margin-top: auto;
+      }
+
+      .flyer .service-pills span {
+        font-size: 22px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gallery">
+      <section class="artboard logo-main" id="logo-main">
+        <img src="logo-homefix-224.svg" alt="Logo HomeFix 224" />
+      </section>
+
+      <section class="artboard avatar" id="avatar">
+        <img src="logo-mark-homefix-224.svg" alt="Logo avatar HomeFix 224" />
+      </section>
+
+      <section class="artboard cover" id="facebook-cover">
+        <div class="photo light"></div>
+        <div class="cover-content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <h1>Vos petits travaux à Conakry, pris en charge <em>simplement.</em></h1>
+          <div class="bottom-row">
+            <span class="tag">Plomberie · Électricité · Clim · Nettoyage</span>
+            <span class="contact">WhatsApp : +224 654 25 55 06</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="artboard square plumbing" id="ad-plomberie">
+        <div class="photo"></div>
+        <div class="content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <span class="tag">Intervention à Conakry</span>
+          <h2>Fuite d’eau ? Robinet cassé ?</h2>
+          <p>Envoyez votre besoin sur WhatsApp. HomeFix 224 vous aide à trouver une solution fiable.</p>
+          <span class="cta">Demander sur WhatsApp</span>
+          <span class="contact">+224 654 25 55 06</span>
+        </div>
+      </section>
+
+      <section class="artboard square electric" id="ad-electricite-clim">
+        <div class="icon-burst">⚡</div>
+        <div class="content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <span class="tag">Dépannage rapide</span>
+          <h2>Électricité ou clim en panne ?</h2>
+          <p>Décrivez le problème, ajoutez une photo si possible, et recevez une réponse rapide.</p>
+          <span class="cta">Écrire sur WhatsApp</span>
+          <span class="contact">homefix-224.netlify.app</span>
+        </div>
+      </section>
+
+      <section class="artboard square maintenance-ad" id="ad-maintenance">
+        <div class="photo"></div>
+        <div class="content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <span class="tag">PME · Bureaux · Résidences</span>
+          <h2>Un contact unique pour vos petits travaux.</h2>
+          <p>Maintenance, nettoyage, plomberie, électricité : gagnez du temps avec HomeFix 224.</p>
+          <span class="cta">Demander un devis</span>
+        </div>
+      </section>
+
+      <section class="artboard story story-urgent" id="status-urgence">
+        <div class="photo"></div>
+        <div class="content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <span class="tag">Nouveau à Conakry</span>
+          <h2>Besoin urgent d’un prestataire ?</h2>
+          <p>Plombier, électricien, technicien clim, nettoyage ou petits travaux.</p>
+          <span class="cta">Envoyez votre demande</span>
+          <span class="contact">WhatsApp : +224 654 25 55 06</span>
+        </div>
+      </section>
+
+      <section class="artboard story story-services" id="status-services">
+        <div class="content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <span class="tag">Simple · Rapide · Suivi humain</span>
+          <h2>Vos petits travaux à Conakry.</h2>
+          <div class="service-pills">
+            <span>Plomberie</span>
+            <span>Électricité</span>
+            <span>Climatisation</span>
+            <span>Nettoyage</span>
+            <span>Peinture</span>
+            <span>Menuiserie</span>
+          </div>
+          <p>Choisissez le service, décrivez le besoin, recevez une réponse rapide.</p>
+          <span class="cta">Demander sur WhatsApp</span>
+          <span class="contact">homefix-224.netlify.app</span>
+        </div>
+      </section>
+
+      <section class="artboard flyer" id="flyer-digital">
+        <div class="photo"></div>
+        <div class="content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <span class="tag">Lancement</span>
+          <h2>Un problème à la maison ou au bureau ?</h2>
+          <p>HomeFix 224 vous aide à trouver rapidement un prestataire pour vos petits travaux à Conakry.</p>
+          <div class="service-pills">
+            <span>Plomberie</span>
+            <span>Électricité</span>
+            <span>Clim</span>
+            <span>Nettoyage</span>
+            <span>Peinture</span>
+            <span>Menuiserie</span>
+          </div>
+          <span class="cta">WhatsApp : +224 654 25 55 06</span>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
