@@ -322,6 +322,7 @@
         <div class="proof-layout">
           <figure class="proof-photo proof-photo-left" aria-hidden="true">
             <img
+              data-proof-left-image
               src="assets/homefix-proof-tech.jpg"
               alt=""
               width="841"
@@ -329,19 +330,20 @@
               loading="lazy"
             />
           </figure>
-          <article class="proof-card">
-            <span class="proof-rating" aria-hidden="true">★★★★★</span>
-            <p>
+          <article class="proof-card" aria-live="polite">
+            <span class="proof-rating" data-proof-rating aria-hidden="true">★★★★★</span>
+            <p data-proof-quote>
               “Je veux comprendre qui intervient, combien cela peut coûter et comment la suite
               est organisée avant de confirmer.”
             </p>
             <div>
-              <strong>Besoin client fréquent</strong>
-              <small>Particuliers, familles, bureaux et résidences à Conakry</small>
+              <strong data-proof-title>Besoin client fréquent</strong>
+              <small data-proof-meta>Particuliers, familles, bureaux et résidences à Conakry</small>
             </div>
           </article>
           <figure class="proof-photo proof-photo-right" aria-hidden="true">
             <img
+              data-proof-right-image
               src="assets/homefix-proof-maintenance.jpg"
               alt=""
               width="960"
@@ -350,11 +352,10 @@
             />
           </figure>
         </div>
-        <div class="proof-dots" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span class="is-active"></span>
-          <span></span>
+        <div class="proof-dots" role="tablist" aria-label="Situations de confiance HomeFix 224">
+          <button class="is-active" type="button" data-proof-step="0" aria-label="Besoin client fréquent"></button>
+          <button type="button" data-proof-step="1" aria-label="Suivi PME et bureaux"></button>
+          <button type="button" data-proof-step="2" aria-label="Intervention mieux préparée"></button>
         </div>
       </section>
 

@@ -102,6 +102,9 @@ const processSlider = document.querySelector("[data-process-slider]");
 const processTabs = document.querySelectorAll("[data-process-step]");
 const processPrevButton = document.querySelector("[data-process-prev]");
 const processNextButton = document.querySelector("[data-process-next]");
+const proofSection = document.querySelector("#confiance");
+const proofControls = document.querySelectorAll("[data-proof-step]");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const processSteps = [
   {
@@ -143,6 +146,40 @@ const processSteps = [
 ];
 
 let activeProcessStep = 0;
+let processAutoplay;
+
+const proofSlides = [
+  {
+    rating: "★★★★★",
+    quote:
+      "“Je veux comprendre qui intervient, combien cela peut coûter et comment la suite est organisée avant de confirmer.”",
+    title: "Besoin client fréquent",
+    meta: "Particuliers, familles, bureaux et résidences à Conakry",
+    leftImage: "assets/homefix-proof-tech.jpg",
+    rightImage: "assets/homefix-proof-maintenance.jpg",
+  },
+  {
+    rating: "★★★★★",
+    quote:
+      "“Pour un bureau, le plus important est d’avoir un contact clair, un suivi simple et une réponse quand il y a un besoin urgent.”",
+    title: "Attente PME & bureaux",
+    meta: "Maintenance, nettoyage, climatisation et petits travaux",
+    leftImage: "assets/homefix-proof-maintenance.jpg",
+    rightImage: "assets/homefix-process-visite.jpg",
+  },
+  {
+    rating: "★★★★★",
+    quote:
+      "“Une photo, le quartier et une bonne clarification évitent les mauvaises surprises avant la visite ou l’intervention.”",
+    title: "Suivi terrain",
+    meta: "Demande mieux qualifiée, intervention mieux préparée",
+    leftImage: "assets/homefix-process-demande.jpg",
+    rightImage: "assets/homefix-process-intervention.jpg",
+  },
+];
+
+let activeProofSlide = 0;
+let proofAutoplay;
 
 function encodeWhatsAppMessage(data = baseMessage) {
   const lines = [
@@ -222,7 +259,18 @@ function getProcessStep(index) {
   return processSteps[(index + processSteps.length) % processSteps.length];
 }
 
-function updateProcessSlider(index = 0) {
+function animateSection(element) {
+  if (!element || prefersReducedMotion) {
+    return;
+  }
+
+  element.classList.remove("is-animating");
+  void element.offsetWidth;
+  element.classList.add("is-animating");
+  window.setTimeout(() => element.classList.remove("is-animating"), 620);
+}
+
+function updateProcessSlider(index = 0, shouldAnimate = false) {
   if (!processSlider) {
     return;
   }
@@ -259,6 +307,84 @@ function updateProcessSlider(index = 0) {
   processTabs.forEach((tab, tabIndex) => {
     tab.classList.toggle("is-active", tabIndex === activeProcessStep);
   });
+
+  if (shouldAnimate) {
+    animateSection(processSlider);
+  }
+}
+
+function stopProcessAutoplay() {
+  window.clearInterval(processAutoplay);
+}
+
+function startProcessAutoplay() {
+  if (!processSlider || prefersReducedMotion) {
+    return;
+  }
+
+  stopProcessAutoplay();
+  processAutoplay = window.setInterval(() => {
+    updateProcessSlider(activeProcessStep + 1, true);
+  }, 5200);
+}
+
+function restartProcessAutoplay() {
+  stopProcessAutoplay();
+  startProcessAutoplay();
+}
+
+function getProofSlide(index) {
+  return proofSlides[(index + proofSlides.length) % proofSlides.length];
+}
+
+function updateProofSlider(index = 0, shouldAnimate = false) {
+  if (!proofSection) {
+    return;
+  }
+
+  activeProofSlide = (index + proofSlides.length) % proofSlides.length;
+  const slide = getProofSlide(activeProofSlide);
+  const rating = proofSection.querySelector("[data-proof-rating]");
+  const quote = proofSection.querySelector("[data-proof-quote]");
+  const title = proofSection.querySelector("[data-proof-title]");
+  const meta = proofSection.querySelector("[data-proof-meta]");
+  const leftImage = proofSection.querySelector("[data-proof-left-image]");
+  const rightImage = proofSection.querySelector("[data-proof-right-image]");
+
+  rating.textContent = slide.rating;
+  quote.textContent = slide.quote;
+  title.textContent = slide.title;
+  meta.textContent = slide.meta;
+  leftImage.src = slide.leftImage;
+  rightImage.src = slide.rightImage;
+
+  proofControls.forEach((control, controlIndex) => {
+    control.classList.toggle("is-active", controlIndex === activeProofSlide);
+  });
+
+  if (shouldAnimate) {
+    animateSection(proofSection);
+  }
+}
+
+function stopProofAutoplay() {
+  window.clearInterval(proofAutoplay);
+}
+
+function startProofAutoplay() {
+  if (!proofSection || prefersReducedMotion) {
+    return;
+  }
+
+  stopProofAutoplay();
+  proofAutoplay = window.setInterval(() => {
+    updateProofSlider(activeProofSlide + 1, true);
+  }, 6200);
+}
+
+function restartProofAutoplay() {
+  stopProofAutoplay();
+  startProofAutoplay();
 }
 
 function setMobileMenu(isOpen) {
@@ -303,14 +429,39 @@ document.querySelectorAll(".service-card").forEach((card) => {
   });
 });
 
-processPrevButton?.addEventListener("click", () => updateProcessSlider(activeProcessStep - 1));
-processNextButton?.addEventListener("click", () => updateProcessSlider(activeProcessStep + 1));
+processPrevButton?.addEventListener("click", () => {
+  updateProcessSlider(activeProcessStep - 1, true);
+  restartProcessAutoplay();
+});
+
+processNextButton?.addEventListener("click", () => {
+  updateProcessSlider(activeProcessStep + 1, true);
+  restartProcessAutoplay();
+});
 
 processTabs.forEach((tab) => {
   tab.addEventListener("click", () => {
-    updateProcessSlider(Number(tab.dataset.processStep || 0));
+    updateProcessSlider(Number(tab.dataset.processStep || 0), true);
+    restartProcessAutoplay();
   });
 });
+
+processSlider?.addEventListener("mouseenter", stopProcessAutoplay);
+processSlider?.addEventListener("mouseleave", startProcessAutoplay);
+processSlider?.addEventListener("focusin", stopProcessAutoplay);
+processSlider?.addEventListener("focusout", startProcessAutoplay);
+
+proofControls.forEach((control) => {
+  control.addEventListener("click", () => {
+    updateProofSlider(Number(control.dataset.proofStep || 0), true);
+    restartProofAutoplay();
+  });
+});
+
+proofSection?.addEventListener("mouseenter", stopProofAutoplay);
+proofSection?.addEventListener("mouseleave", startProofAutoplay);
+proofSection?.addEventListener("focusin", stopProofAutoplay);
+proofSection?.addEventListener("focusout", startProofAutoplay);
 
 serviceSelect.addEventListener("change", () => {
   updateServicePanel(serviceSelect.value || "Plomberie");
@@ -347,3 +498,6 @@ document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe
 updateDefaultLinks();
 updateServicePanel("Plomberie");
 updateProcessSlider(0);
+updateProofSlider(0);
+startProcessAutoplay();
+startProofAutoplay();

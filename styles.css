@@ -734,6 +734,7 @@ textarea:focus-visible {
   grid-template-columns: minmax(0, 0.96fr) minmax(0, 1fr);
   min-height: 360px;
   overflow: hidden;
+  transform-origin: center;
 }
 
 .process-focus-media {
@@ -814,8 +815,8 @@ textarea:focus-visible {
 }
 
 .process-peek {
+  aspect-ratio: 1 / 1.08;
   border-radius: var(--radius);
-  height: 260px;
   opacity: 0.36;
   overflow: hidden;
   position: relative;
@@ -891,6 +892,19 @@ textarea:focus-visible {
   color: #fff;
 }
 
+.process-slider.is-animating .process-focus {
+  animation: slideCardIn 0.46s ease both;
+}
+
+.process-slider.is-animating .process-focus-media img,
+.process-slider.is-animating .process-peek img {
+  animation: imageDriftIn 0.56s ease both;
+}
+
+.process-slider.is-animating .process-focus-copy > * {
+  animation: copyFadeIn 0.44s ease both;
+}
+
 .proof-section {
   background:
     radial-gradient(circle at 50% 6%, rgba(15, 159, 114, 0.08), transparent 30%),
@@ -901,7 +915,7 @@ textarea:focus-visible {
 .proof-layout {
   align-items: center;
   display: grid;
-  grid-template-columns: minmax(180px, 0.28fr) minmax(0, 0.9fr) minmax(180px, 0.28fr);
+  grid-template-columns: minmax(220px, 0.32fr) minmax(0, 0.9fr) minmax(220px, 0.32fr);
   gap: clamp(18px, 3vw, 42px);
   margin: 0 auto;
   max-width: 1260px;
@@ -965,19 +979,21 @@ textarea:focus-visible {
 }
 
 .proof-photo {
+  aspect-ratio: 4 / 5;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  height: 350px;
+  height: auto;
   margin: 0;
   overflow: hidden;
+  width: 100%;
 }
 
 .proof-photo-left {
-  transform: translateX(-16px);
+  transform: translateX(-10px);
 }
 
 .proof-photo-right {
-  transform: translateX(16px);
+  transform: translateX(10px);
 }
 
 .proof-dots {
@@ -987,16 +1003,32 @@ textarea:focus-visible {
   margin-top: 28px;
 }
 
-.proof-dots span {
+.proof-dots button {
   background: #d7dce3;
+  border: 0;
   border-radius: 999px;
+  cursor: pointer;
   height: 12px;
+  padding: 0;
+  transition: background 0.2s ease, width 0.2s ease, transform 0.2s ease;
   width: 12px;
 }
 
-.proof-dots span.is-active {
+.proof-dots button.is-active {
   background: var(--green);
   width: 52px;
+}
+
+.proof-dots button:hover {
+  transform: translateY(-1px);
+}
+
+.proof-section.is-animating .proof-card {
+  animation: slideCardIn 0.46s ease both;
+}
+
+.proof-section.is-animating .proof-photo {
+  animation: proofPhotoIn 0.56s ease both;
 }
 
 .urgent-band {
@@ -1572,6 +1604,50 @@ textarea:focus-visible {
   }
   to {
     transform: scale(1.055) translateX(-8px);
+  }
+}
+
+@keyframes slideCardIn {
+  from {
+    opacity: 0.96;
+    transform: translateX(22px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes imageDriftIn {
+  from {
+    opacity: 0.88;
+    transform: scale(1.045) translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes copyFadeIn {
+  from {
+    opacity: 0.74;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes proofPhotoIn {
+  from {
+    opacity: 0.86;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
