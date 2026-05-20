@@ -109,37 +109,37 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const processSteps = [
   {
     number: "01",
-    label: "Demande WhatsApp",
-    title: "Envoyez le besoin",
+    label: "Problème à la maison",
+    title: "Le client signale son urgence",
     text:
-      "Service, quartier, urgence et photo si possible. Le message WhatsApp est préparé pour éviter les longues explications.",
+      "Une fuite, une panne ou une clim bloquée : il envoie le quartier, une photo et le niveau d’urgence sur WhatsApp.",
     image: "assets/homefix-process-demande.jpg",
     alt: "Client HomeFix montrant une photo de son problème à un technicien",
   },
   {
     number: "02",
-    label: "Clarification",
-    title: "On comprend la situation",
+    label: "Diagnostic rapide",
+    title: "HomeFix clarifie le besoin",
     text:
-      "HomeFix 224 vérifie les informations utiles : type de panne, priorité, localisation et besoin d’une visite.",
-    image: "assets/homefix-process-visite.jpg",
+      "Nous vérifions le service, la priorité, le quartier et les informations utiles avant d’envoyer quelqu’un.",
+    image: "assets/homefix-mission-client.jpg",
     alt: "Techniciens HomeFix échangeant avec une cliente à Conakry",
   },
   {
     number: "03",
-    label: "Devis ou estimation",
-    title: "Recevez une base claire",
+    label: "Solution proposée",
+    title: "Une estimation plus claire",
     text:
-      "Selon le service, vous recevez une estimation, une orientation ou une visite avant confirmation de l’intervention.",
+      "Selon le cas, le client reçoit une orientation, une estimation ou une proposition de visite avant confirmation.",
     image: "assets/homefix-proof-tech.jpg",
     alt: "Technicienne HomeFix contrôlant un tableau électrique",
   },
   {
     number: "04",
-    label: "Intervention suivie",
-    title: "Planifiez l’intervention",
+    label: "Intervention terrain",
+    title: "L’intervention est organisée",
     text:
-      "Une intervention ou visite est organisée selon l’urgence, la zone et la disponibilité du prestataire adapté.",
+      "Le prestataire adapté intervient selon l’urgence, la disponibilité et le quartier, avec un suivi HomeFix.",
     image: "assets/homefix-process-intervention.jpg",
     alt: "Technicien HomeFix réalisant une intervention de plomberie",
   },
@@ -152,29 +152,38 @@ const proofSlides = [
   {
     rating: "★★★★★",
     quote:
-      "“Je veux comprendre qui intervient, combien cela peut coûter et comment la suite est organisée avant de confirmer.”",
-    title: "Besoin client fréquent",
-    meta: "Particuliers, familles, bureaux et résidences à Conakry",
-    leftImage: "assets/homefix-proof-tech.jpg",
-    rightImage: "assets/homefix-proof-maintenance.jpg",
+      "“Quand il y a une fuite ou une panne, je veux une réponse claire avant que le problème ne s’aggrave.”",
+    title: "Urgence à domicile",
+    meta: "Plomberie, électricité, climatisation et petits dépannages",
+    leftImage: "assets/homefix-mission-clim.jpg",
+    rightImage: "assets/homefix-mission-peinture.jpg",
   },
   {
     rating: "★★★★★",
     quote:
-      "“Pour un bureau, le plus important est d’avoir un contact clair, un suivi simple et une réponse quand il y a un besoin urgent.”",
-    title: "Attente PME & bureaux",
-    meta: "Maintenance, nettoyage, climatisation et petits travaux",
+      "“Voir une équipe organisée et identifiable donne déjà plus confiance avant de confirmer une intervention.”",
+    title: "Équipe identifiable",
+    meta: "Techniciens HomeFix, tenue claire, outils adaptés",
+    leftImage: "assets/homefix-mission-equipe.jpg",
+    rightImage: "assets/homefix-mission-clim.jpg",
+  },
+  {
+    rating: "★★★★★",
+    quote:
+      "“Pour un bureau, il nous faut un contact unique qui comprend vite le besoin et organise la suite.”",
+    title: "PME & bureaux",
+    meta: "Maintenance, nettoyage, climatisation et suivi régulier",
     leftImage: "assets/homefix-proof-maintenance.jpg",
-    rightImage: "assets/homefix-process-visite.jpg",
+    rightImage: "assets/homefix-mission-visite.jpg",
   },
   {
     rating: "★★★★★",
     quote:
-      "“Une photo, le quartier et une bonne clarification évitent les mauvaises surprises avant la visite ou l’intervention.”",
-    title: "Suivi terrain",
-    meta: "Demande mieux qualifiée, intervention mieux préparée",
-    leftImage: "assets/homefix-process-demande.jpg",
-    rightImage: "assets/homefix-process-intervention.jpg",
+      "“Une demande bien expliquée, une photo et un suivi sérieux évitent les mauvaises surprises.”",
+    title: "Intervention mieux préparée",
+    meta: "Demande qualifiée, estimation plus claire, déplacement plus utile",
+    leftImage: "assets/homefix-mission-peinture.jpg",
+    rightImage: "assets/homefix-mission-client.jpg",
   },
 ];
 
@@ -325,7 +334,7 @@ function startProcessAutoplay() {
   stopProcessAutoplay();
   processAutoplay = window.setInterval(() => {
     updateProcessSlider(activeProcessStep + 1, true);
-  }, 5200);
+  }, 2800);
 }
 
 function restartProcessAutoplay() {
@@ -379,7 +388,7 @@ function startProofAutoplay() {
   stopProofAutoplay();
   proofAutoplay = window.setInterval(() => {
     updateProofSlider(activeProofSlide + 1, true);
-  }, 6200);
+  }, 2800);
 }
 
 function restartProofAutoplay() {
