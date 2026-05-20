@@ -225,26 +225,58 @@
         </div>
       </section>
 
-      <section class="section process reveal" id="process">
+      <section class="section process process-story reveal" id="process">
         <div class="section-heading">
-          <h2>Un parcours simple, pensé pour le mobile.</h2>
+          <h2>Un parcours simple, visible à chaque étape.</h2>
+          <p>
+            Le client sait quoi envoyer, HomeFix clarifie la demande, puis l’intervention
+            est organisée avec un suivi humain.
+          </p>
         </div>
-        <div class="steps">
-          <article>
-            <span>1</span>
-            <h3>Envoyez votre demande</h3>
-            <p>Service, quartier, urgence et photo si possible. Le message WhatsApp est préparé.</p>
+        <div class="process-slider" data-process-slider>
+          <button class="process-arrow process-arrow-prev" type="button" data-process-prev aria-label="Étape précédente">‹</button>
+          <div class="process-peek process-peek-left" aria-hidden="true">
+            <img data-process-prev-image src="assets/homefix-process-demande.jpg" alt="" />
+            <span data-process-prev-number>04</span>
+          </div>
+          <article class="process-focus" aria-live="polite">
+            <div class="process-focus-media">
+              <img
+                data-process-image
+                src="assets/homefix-process-demande.jpg"
+                alt="Client HomeFix montrant une photo de son problème à un technicien"
+                width="1200"
+                height="799"
+                loading="lazy"
+              />
+            </div>
+            <div class="process-focus-copy">
+              <span class="process-step-badge" data-process-number>01</span>
+              <p class="panel-label" data-process-label>Demande WhatsApp</p>
+              <h3 data-process-title>Envoyez le besoin</h3>
+              <p data-process-text>
+                Service, quartier, urgence et photo si possible. Le message WhatsApp est préparé
+                pour éviter les longues explications.
+              </p>
+              <div class="process-progress" aria-hidden="true">
+                <span class="is-active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
           </article>
-          <article>
-            <span>2</span>
-            <h3>Recevez une réponse</h3>
-            <p>HomeFix 224 clarifie le besoin, estime la priorité et vous oriente.</p>
-          </article>
-          <article>
-            <span>3</span>
-            <h3>Planifiez l’intervention</h3>
-            <p>Une visite ou intervention est organisée selon l’urgence et la disponibilité.</p>
-          </article>
+          <div class="process-peek process-peek-right" aria-hidden="true">
+            <img data-process-next-image src="assets/homefix-process-visite.jpg" alt="" />
+            <span data-process-next-number>02</span>
+          </div>
+          <button class="process-arrow process-arrow-next" type="button" data-process-next aria-label="Étape suivante">›</button>
+        </div>
+        <div class="process-tabs" role="tablist" aria-label="Étapes HomeFix 224">
+          <button class="is-active" type="button" data-process-step="0">01 <span>Demande</span></button>
+          <button type="button" data-process-step="1">02 <span>Clarification</span></button>
+          <button type="button" data-process-step="2">03 <span>Devis</span></button>
+          <button type="button" data-process-step="3">04 <span>Intervention</span></button>
         </div>
       </section>
 
@@ -276,6 +308,53 @@
               loading="lazy"
             />
           </picture>
+        </div>
+      </section>
+
+      <section class="section proof-section reveal" id="confiance">
+        <div class="section-heading">
+          <h2>La confiance se construit avant l’intervention.</h2>
+          <p>
+            HomeFix 224 met l’accent sur les points qui rassurent vraiment : clarté,
+            disponibilité, suivi et informations utiles avant de faire déplacer quelqu’un.
+          </p>
+        </div>
+        <div class="proof-layout">
+          <figure class="proof-photo proof-photo-left" aria-hidden="true">
+            <img
+              src="assets/homefix-proof-tech.jpg"
+              alt=""
+              width="841"
+              height="1200"
+              loading="lazy"
+            />
+          </figure>
+          <article class="proof-card">
+            <span class="proof-rating" aria-hidden="true">★★★★★</span>
+            <p>
+              “Je veux comprendre qui intervient, combien cela peut coûter et comment la suite
+              est organisée avant de confirmer.”
+            </p>
+            <div>
+              <strong>Besoin client fréquent</strong>
+              <small>Particuliers, familles, bureaux et résidences à Conakry</small>
+            </div>
+          </article>
+          <figure class="proof-photo proof-photo-right" aria-hidden="true">
+            <img
+              src="assets/homefix-proof-maintenance.jpg"
+              alt=""
+              width="960"
+              height="1200"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+        <div class="proof-dots" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span class="is-active"></span>
+          <span></span>
         </div>
       </section>
 

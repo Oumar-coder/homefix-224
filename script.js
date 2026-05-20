@@ -98,6 +98,51 @@ const urgentLink = document.querySelector("[data-urgent-link]");
 const planLink = document.querySelector("[data-plan-link]");
 const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
 const mobileMenu = document.querySelector("#mobile-menu");
+const processSlider = document.querySelector("[data-process-slider]");
+const processTabs = document.querySelectorAll("[data-process-step]");
+const processPrevButton = document.querySelector("[data-process-prev]");
+const processNextButton = document.querySelector("[data-process-next]");
+
+const processSteps = [
+  {
+    number: "01",
+    label: "Demande WhatsApp",
+    title: "Envoyez le besoin",
+    text:
+      "Service, quartier, urgence et photo si possible. Le message WhatsApp est préparé pour éviter les longues explications.",
+    image: "assets/homefix-process-demande.jpg",
+    alt: "Client HomeFix montrant une photo de son problème à un technicien",
+  },
+  {
+    number: "02",
+    label: "Clarification",
+    title: "On comprend la situation",
+    text:
+      "HomeFix 224 vérifie les informations utiles : type de panne, priorité, localisation et besoin d’une visite.",
+    image: "assets/homefix-process-visite.jpg",
+    alt: "Techniciens HomeFix échangeant avec une cliente à Conakry",
+  },
+  {
+    number: "03",
+    label: "Devis ou estimation",
+    title: "Recevez une base claire",
+    text:
+      "Selon le service, vous recevez une estimation, une orientation ou une visite avant confirmation de l’intervention.",
+    image: "assets/homefix-proof-tech.jpg",
+    alt: "Technicienne HomeFix contrôlant un tableau électrique",
+  },
+  {
+    number: "04",
+    label: "Intervention suivie",
+    title: "Planifiez l’intervention",
+    text:
+      "Une intervention ou visite est organisée selon l’urgence, la zone et la disponibilité du prestataire adapté.",
+    image: "assets/homefix-process-intervention.jpg",
+    alt: "Technicien HomeFix réalisant une intervention de plomberie",
+  },
+];
+
+let activeProcessStep = 0;
 
 function encodeWhatsAppMessage(data = baseMessage) {
   const lines = [
@@ -173,6 +218,49 @@ function updateServicePanel(serviceName, shouldScroll = false) {
   }
 }
 
+function getProcessStep(index) {
+  return processSteps[(index + processSteps.length) % processSteps.length];
+}
+
+function updateProcessSlider(index = 0) {
+  if (!processSlider) {
+    return;
+  }
+
+  activeProcessStep = (index + processSteps.length) % processSteps.length;
+  const step = getProcessStep(activeProcessStep);
+  const prevStep = getProcessStep(activeProcessStep - 1);
+  const nextStep = getProcessStep(activeProcessStep + 1);
+  const processImage = processSlider.querySelector("[data-process-image]");
+  const processNumber = processSlider.querySelector("[data-process-number]");
+  const processLabel = processSlider.querySelector("[data-process-label]");
+  const processTitle = processSlider.querySelector("[data-process-title]");
+  const processText = processSlider.querySelector("[data-process-text]");
+  const prevImage = processSlider.querySelector("[data-process-prev-image]");
+  const nextImage = processSlider.querySelector("[data-process-next-image]");
+  const prevNumber = processSlider.querySelector("[data-process-prev-number]");
+  const nextNumber = processSlider.querySelector("[data-process-next-number]");
+
+  processImage.src = step.image;
+  processImage.alt = step.alt;
+  processNumber.textContent = step.number;
+  processLabel.textContent = step.label;
+  processTitle.textContent = step.title;
+  processText.textContent = step.text;
+  prevImage.src = prevStep.image;
+  nextImage.src = nextStep.image;
+  prevNumber.textContent = prevStep.number;
+  nextNumber.textContent = nextStep.number;
+
+  processSlider.querySelectorAll(".process-progress span").forEach((item, itemIndex) => {
+    item.classList.toggle("is-active", itemIndex <= activeProcessStep);
+  });
+
+  processTabs.forEach((tab, tabIndex) => {
+    tab.classList.toggle("is-active", tabIndex === activeProcessStep);
+  });
+}
+
 function setMobileMenu(isOpen) {
   if (!mobileMenu || !mobileMenuToggle) {
     return;
@@ -215,6 +303,15 @@ document.querySelectorAll(".service-card").forEach((card) => {
   });
 });
 
+processPrevButton?.addEventListener("click", () => updateProcessSlider(activeProcessStep - 1));
+processNextButton?.addEventListener("click", () => updateProcessSlider(activeProcessStep + 1));
+
+processTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    updateProcessSlider(Number(tab.dataset.processStep || 0));
+  });
+});
+
 serviceSelect.addEventListener("change", () => {
   updateServicePanel(serviceSelect.value || "Plomberie");
   const matchingCard = [...document.querySelectorAll(".service-card")].find(
@@ -249,3 +346,4 @@ document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe
 
 updateDefaultLinks();
 updateServicePanel("Plomberie");
+updateProcessSlider(0);
