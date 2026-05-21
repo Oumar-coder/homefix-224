@@ -223,23 +223,36 @@ function getFormData() {
 
 function updateDefaultLinks() {
   whatsappLinks.forEach((link) => {
-    link.href = encodeWhatsAppMessage();
+    const service = link.dataset.service || baseMessage.service;
+    link.href = encodeWhatsAppMessage({
+      ...baseMessage,
+      service,
+      description: link.dataset.message || baseMessage.description,
+    });
   });
 
-  urgentLink.href = encodeWhatsAppMessage({
+  if (urgentLink) {
+    urgentLink.href = encodeWhatsAppMessage({
     ...baseMessage,
     urgency: "Oui",
     description: "J’ai une urgence et je souhaite être contacté rapidement.",
-  });
+    });
+  }
 
-  planLink.href = encodeWhatsAppMessage({
+  if (planLink) {
+    planLink.href = encodeWhatsAppMessage({
     ...baseMessage,
     service: "Forfait maintenance",
     description: "Je souhaite recevoir des informations sur un forfait maintenance.",
-  });
+    });
+  }
 }
 
 function updateServicePanel(serviceName, shouldScroll = false) {
+  if (!servicePanel || !serviceTitle || !serviceSummary || !servicePoints || !serviceWhatsapp) {
+    return;
+  }
+
   const detail = serviceDetails[serviceName] || serviceDetails.Plomberie;
   serviceTitle.textContent = serviceName;
   serviceSummary.textContent = detail.summary;
@@ -472,7 +485,7 @@ proofSection?.addEventListener("mouseleave", startProofAutoplay);
 proofSection?.addEventListener("focusin", stopProofAutoplay);
 proofSection?.addEventListener("focusout", startProofAutoplay);
 
-serviceSelect.addEventListener("change", () => {
+serviceSelect?.addEventListener("change", () => {
   updateServicePanel(serviceSelect.value || "Plomberie");
   const matchingCard = [...document.querySelectorAll(".service-card")].find(
     (card) => card.dataset.service === serviceSelect.value
@@ -483,7 +496,7 @@ serviceSelect.addEventListener("change", () => {
   }
 });
 
-form.addEventListener("submit", () => {
+form?.addEventListener("submit", () => {
   const data = getFormData();
   formStatus.textContent =
     "Demande envoyée vers HomeFix 224. WhatsApp s’ouvre avec les mêmes informations pour accélérer la réponse.";
