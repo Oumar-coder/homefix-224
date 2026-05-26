@@ -232,6 +232,34 @@
         width: 1400px;
       }
 
+      .logo-clean {
+        align-items: center;
+        background: transparent;
+        display: flex;
+        height: 420px;
+        justify-content: center;
+        width: 1400px;
+      }
+
+      .logo-clean img {
+        height: 420px;
+        width: 1400px;
+      }
+
+      .logo-mark-transparent {
+        align-items: center;
+        background: transparent;
+        display: flex;
+        height: 1080px;
+        justify-content: center;
+        width: 1080px;
+      }
+
+      .logo-mark-transparent img {
+        height: 1080px;
+        width: 1080px;
+      }
+
       .avatar {
         align-items: center;
         background: radial-gradient(circle at 30% 18%, rgba(244, 179, 61, 0.25), transparent 28%), var(--navy);
@@ -303,6 +331,10 @@
         --image: url("source-images/nettoyage-bureau.png");
       }
 
+      .services-ad {
+        --image: url("source-images/equipe-homefix-outils.png");
+      }
+
       .icon-burst {
         align-items: center;
         background: rgba(255, 255, 255, 0.12);
@@ -358,6 +390,69 @@
         --image: url("source-images/equipe-homefix-outils.png");
       }
 
+      .story-process {
+        background:
+          radial-gradient(circle at 78% 14%, rgba(244, 179, 61, 0.18), transparent 28%),
+          linear-gradient(160deg, var(--navy), #0d2b4f 55%, #0f5d60);
+        height: 1920px;
+        padding: 86px 64px;
+        width: 1080px;
+      }
+
+      .story-process .content {
+        display: grid;
+        gap: 38px;
+        height: 100%;
+        position: relative;
+        z-index: 3;
+      }
+
+      .story-process h2 {
+        font-size: 96px;
+      }
+
+      .process-cards {
+        display: grid;
+        gap: 22px;
+        position: relative;
+        z-index: 3;
+      }
+
+      .process-card {
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 28px;
+        color: var(--white);
+        display: grid;
+        font-size: 31px;
+        font-weight: 900;
+        gap: 4px;
+        grid-template-columns: 96px 1fr;
+        min-height: 128px;
+        padding: 24px;
+      }
+
+      .process-card strong {
+        align-items: center;
+        background: var(--amber);
+        border-radius: 22px;
+        color: var(--navy);
+        display: flex;
+        font-size: 42px;
+        height: 78px;
+        justify-content: center;
+        width: 78px;
+      }
+
+      .process-card small {
+        color: rgba(255, 255, 255, 0.7);
+        display: block;
+        font-size: 23px;
+        font-weight: 800;
+        margin-top: 8px;
+      }
+
       .flyer {
         --image: url("source-images/diagnostic-client-photo.png");
         height: 1350px;
@@ -387,6 +482,18 @@
     <div class="gallery">
       <section class="artboard logo-main" id="logo-main">
         <img src="logo-homefix-224.svg" alt="Logo HomeFix 224" />
+      </section>
+
+      <section class="artboard logo-clean" id="logo-light">
+        <img src="logo-homefix-224-light.svg" alt="Logo HomeFix 224 pour fond clair" />
+      </section>
+
+      <section class="artboard logo-clean" id="logo-white">
+        <img src="logo-homefix-224-white.svg" alt="Logo HomeFix 224 blanc transparent" />
+      </section>
+
+      <section class="artboard logo-mark-transparent" id="logo-mark-transparent">
+        <img src="logo-mark-homefix-224-transparent.svg" alt="Icône HomeFix 224 transparente" />
       </section>
 
       <section class="artboard avatar" id="avatar">
@@ -477,6 +584,26 @@
         </div>
       </section>
 
+      <section class="artboard square services-ad" id="ad-services">
+        <div class="photo deep"></div>
+        <div class="content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <span class="tag">Services à domicile</span>
+          <h2>Un seul message pour organiser vos petits travaux.</h2>
+          <p>Plomberie, électricité, climatisation, nettoyage, peinture, menuiserie.</p>
+          <span class="cta">WhatsApp : +224 654 25 55 06</span>
+        </div>
+      </section>
+
       <section class="artboard story story-urgent" id="status-urgence">
         <div class="photo deep top"></div>
         <div class="content">
@@ -524,6 +651,31 @@
           <p>Choisissez le service, décrivez le besoin, recevez une réponse rapide.</p>
           <span class="cta">Demander sur WhatsApp</span>
           <span class="contact">homefix-224.netlify.app</span>
+        </div>
+      </section>
+
+      <section class="artboard story-process" id="status-process">
+        <div class="content">
+          <div class="brand-row">
+            <div class="brand-mark">
+              <svg viewBox="0 0 108 108" aria-hidden="true">
+                <path d="M24 52L54 28L84 52V88H64V64H44V88H24V52Z" fill="#071D37"/>
+                <path d="M54 28L88 55" stroke="#F4B33D" stroke-width="10" stroke-linecap="round"/>
+                <path d="M58 48L48 66H61L53 86L77 57H62L70 48H58Z" fill="#0F9F72"/>
+              </svg>
+            </div>
+            <div class="brand-name">HomeFix <strong>224</strong><small>Kipé · Conakry</small></div>
+          </div>
+          <span class="tag">Comment ça marche ?</span>
+          <h2>Votre demande, clarifiée en 4 étapes.</h2>
+          <div class="process-cards">
+            <div class="process-card"><strong>01</strong><span>Choisissez le service<small>Plomberie, électricité, clim, nettoyage...</small></span></div>
+            <div class="process-card"><strong>02</strong><span>Envoyez le quartier et une photo<small>WhatsApp aide à comprendre vite.</small></span></div>
+            <div class="process-card"><strong>03</strong><span>Recevez une orientation claire<small>Estimation ou visite si nécessaire.</small></span></div>
+            <div class="process-card"><strong>04</strong><span>Intervention organisée<small>Avec suivi HomeFix 224.</small></span></div>
+          </div>
+          <span class="cta">Demander sur WhatsApp</span>
+          <span class="contact">+224 654 25 55 06</span>
         </div>
       </section>
 

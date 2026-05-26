@@ -13,13 +13,18 @@ const { chromium } = require("/Users/oumdia/.cache/codex-runtimes/codex-primary-
 
 const exports = [
   ["logo-main", "homefix-224-logo-principal.png"],
+  ["logo-light", "homefix-224-logo-fond-clair.png"],
+  ["logo-white", "homefix-224-logo-blanc-transparent.png"],
+  ["logo-mark-transparent", "homefix-224-icone-transparente.png"],
   ["avatar", "homefix-224-photo-profil.png"],
   ["facebook-cover", "homefix-224-banniere-facebook.png"],
   ["ad-plomberie", "homefix-224-pub-plomberie.png"],
   ["ad-electricite-clim", "homefix-224-pub-electricite-clim.png"],
   ["ad-maintenance", "homefix-224-pub-maintenance.png"],
+  ["ad-services", "homefix-224-pub-services-domicile.png"],
   ["status-urgence", "homefix-224-statut-urgence.png"],
   ["status-services", "homefix-224-statut-services.png"],
+  ["status-process", "homefix-224-statut-comment-ca-marche.png"],
   ["flyer-digital", "homefix-224-flyer-digital.png"],
 ];
 
@@ -38,7 +43,7 @@ for (const [id, filename] of exports) {
   const element = page.locator(`#${id}`);
   await element.screenshot({
     path: path.join(outputDir, filename),
-    omitBackground: id === "logo-main",
+    omitBackground: id.startsWith("logo"),
   });
 }
 

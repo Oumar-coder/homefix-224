@@ -1,0 +1,13 @@
+<svg width="1400" height="420" viewBox="0 0 1400 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(92 70)">
+    <path d="M60 132L178 38L296 132V286H210V188H146V286H60V132Z" fill="#FFFFFF"/>
+    <path d="M178 38L314 146" stroke="#F4B33D" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M196 126L156 202H208L178 282L260 170H206L236 126H196Z" fill="#13B981"/>
+  </g>
+  <g transform="translate(455 86)">
+    <text x="0" y="106" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="92" font-weight="950">HomeFix</text>
+    <text x="456" y="106" fill="#F4B33D" font-family="Inter, Arial, sans-serif" font-size="92" font-weight="950">224</text>
+    <rect x="0" y="154" width="520" height="8" rx="4" fill="#13B981"/>
+    <text x="0" y="230" fill="#DDE7F2" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="8">KIPÉ · CONAKRY</text>
+  </g>
+</svg>
