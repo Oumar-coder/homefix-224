@@ -83,6 +83,7 @@ const baseMessage = {
   district: "Kipé",
   city: "Conakry",
   description: "",
+  photo: "Non",
 };
 
 const form = document.querySelector(".request-form");
@@ -201,10 +202,297 @@ function encodeWhatsAppMessage(data = baseMessage) {
     `Nom : ${data.name || ""}`,
     `Téléphone : ${data.phone || ""}`,
     `Description : ${data.description || ""}`,
-    "Photo disponible : Oui / Non",
+    `Photo disponible : ${data.photo || "Oui / Non"}`,
   ];
 
   return `https://wa.me/${homefixPhone}?text=${encodeURIComponent(lines.join("\n"))}`;
+}
+
+const assistantSteps = [
+  {
+    key: "service",
+    title: "Quel service vous faut-il ?",
+    helper: "Choisissez le besoin principal. Vous pourrez ajouter des détails ensuite.",
+    type: "choices",
+    options: Object.keys(serviceDetails),
+  },
+  {
+    key: "urgency",
+    title: "Est-ce urgent ?",
+    helper: "Une urgence peut être une fuite importante, une panne dangereuse ou un problème qui bloque l’usage du lieu.",
+    type: "choices",
+    options: ["Oui", "Non"],
+  },
+  {
+    key: "district",
+    title: "Dans quel quartier ?",
+    helper: "Exemple : Kipé, Nongo, Kaloum, Lambanyi, Taouyah...",
+    type: "text",
+    placeholder: "Kipé",
+    required: true,
+  },
+  {
+    key: "description",
+    title: "Expliquez le problème.",
+    helper: "Décrivez ce qui se passe, depuis quand, et ce que vous avez déjà remarqué.",
+    type: "textarea",
+    placeholder: "Ex : fuite sous l’évier depuis ce matin, l’eau coule quand on ouvre le robinet...",
+    required: true,
+  },
+  {
+    key: "photo",
+    title: "Avez-vous une photo ou vidéo ?",
+    helper: "Une photo aide HomeFix 224 à comprendre plus vite la situation.",
+    type: "choices",
+    options: ["Oui", "Non"],
+  },
+  {
+    key: "name",
+    title: "Votre nom complet ?",
+    helper: "Cela permet de retrouver facilement votre demande.",
+    type: "text",
+    placeholder: "Votre nom",
+    required: true,
+  },
+  {
+    key: "phone",
+    title: "Votre numéro WhatsApp ?",
+    helper: "HomeFix 224 pourra vous rappeler ou confirmer les détails.",
+    type: "tel",
+    placeholder: "+224 ...",
+    required: true,
+  },
+];
+
+const assistantData = {
+  service: baseMessage.service,
+  urgency: baseMessage.urgency,
+  district: baseMessage.district,
+  city: "Conakry",
+  description: "",
+  photo: "Non",
+  name: "",
+  phone: "",
+};
+
+let assistantStepIndex = 0;
+
+function buildAssistantSummary(data = assistantData) {
+  return [
+    ["Service", data.service],
+    ["Quartier", data.district || "Kipé"],
+    ["Ville", "Conakry"],
+    ["Urgence", data.urgency || "Non"],
+    ["Nom", data.name],
+    ["Téléphone", data.phone],
+    ["Photo disponible", data.photo || "Non"],
+    ["Description", data.description],
+  ];
+}
+
+function submitAssistantRequest(data) {
+  const payload = new URLSearchParams();
+  payload.set("form-name", "demande-service-homefix");
+  payload.set("subject", "Nouvelle demande HomeFix 224 via assistant");
+  payload.set("Ville", "Conakry");
+  payload.set("Email destination", "homefix224@gmail.com");
+  payload.set("Nom", data.name || "");
+  payload.set("Téléphone WhatsApp", data.phone || "");
+  payload.set("Quartier", data.district || "Kipé");
+  payload.set("Service", data.service || "Plomberie");
+  payload.set("Urgence", data.urgency || "Non");
+  payload.set(
+    "Description",
+    `${data.description || ""}\n\nPhoto disponible : ${data.photo || "Non"}\nSource : Assistant HomeFix 224`
+  );
+
+  return fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: payload.toString(),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Assistant request failed with status ${response.status}`);
+    }
+    return response;
+  });
+}
+
+function createAssistantWidget() {
+  if (document.querySelector(".assistant-widget")) {
+    return;
+  }
+
+  const widget = document.createElement("aside");
+  widget.className = "assistant-widget";
+  widget.innerHTML = `
+    <button class="assistant-toggle" type="button" aria-expanded="false" aria-controls="assistant-panel">
+      <span class="assistant-toggle-icon" aria-hidden="true">?</span>
+      <span><strong>Assistant HomeFix</strong><small>Décrire mon problème</small></span>
+    </button>
+    <section class="assistant-panel" id="assistant-panel" aria-hidden="true" aria-label="Assistant de demande HomeFix 224">
+      <div class="assistant-head">
+        <div>
+          <span>Assistant HomeFix 224</span>
+          <strong>Réponse guidée en moins d’une minute.</strong>
+        </div>
+        <button class="assistant-close" type="button" aria-label="Fermer l’assistant">×</button>
+      </div>
+      <div class="assistant-progress" aria-hidden="true"><span></span></div>
+      <div class="assistant-body" data-assistant-body></div>
+      <p class="assistant-status" data-assistant-status role="status" aria-live="polite"></p>
+    </section>
+  `;
+  document.body.append(widget);
+
+  const toggle = widget.querySelector(".assistant-toggle");
+  const panel = widget.querySelector(".assistant-panel");
+  const close = widget.querySelector(".assistant-close");
+
+  function setOpen(isOpen) {
+    widget.classList.toggle("is-open", isOpen);
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    panel.setAttribute("aria-hidden", isOpen ? "false" : "true");
+    if (isOpen) {
+      renderAssistantStep();
+    }
+  }
+
+  toggle.addEventListener("click", () => setOpen(!widget.classList.contains("is-open")));
+  close.addEventListener("click", () => setOpen(false));
+}
+
+function setAssistantStatus(message, tone = "") {
+  const status = document.querySelector("[data-assistant-status]");
+  if (!status) {
+    return;
+  }
+
+  status.textContent = message;
+  status.dataset.tone = tone;
+}
+
+function renderAssistantStep() {
+  const body = document.querySelector("[data-assistant-body]");
+  const progress = document.querySelector(".assistant-progress span");
+  if (!body || !progress) {
+    return;
+  }
+
+  setAssistantStatus("");
+  const isSummary = assistantStepIndex >= assistantSteps.length;
+  progress.style.width = `${Math.round(((assistantStepIndex + 1) / (assistantSteps.length + 1)) * 100)}%`;
+
+  if (isSummary) {
+    const rows = buildAssistantSummary()
+      .map(([label, value]) => `<li><span>${label}</span><strong>${value || "Non renseigné"}</strong></li>`)
+      .join("");
+
+    body.innerHTML = `
+      <p class="assistant-kicker">Résumé de la demande</p>
+      <h2>Tout est prêt pour HomeFix 224.</h2>
+      <ul class="assistant-summary">${rows}</ul>
+      <div class="assistant-actions">
+        <button class="assistant-secondary" type="button" data-assistant-back>Modifier</button>
+        <button class="assistant-primary" type="button" data-assistant-submit>Envoyer à HomeFix</button>
+      </div>
+      <p class="assistant-note">La demande sera enregistrée, puis WhatsApp s’ouvrira avec le message prérempli.</p>
+    `;
+
+    body.querySelector("[data-assistant-back]").addEventListener("click", () => {
+      assistantStepIndex = assistantSteps.length - 1;
+      renderAssistantStep();
+    });
+
+    body.querySelector("[data-assistant-submit]").addEventListener("click", async (event) => {
+      const button = event.currentTarget;
+      button.disabled = true;
+      button.textContent = "Envoi en cours...";
+      const whatsappWindow = window.open(encodeWhatsAppMessage(assistantData), "_blank", "noopener");
+
+      try {
+        await submitAssistantRequest(assistantData);
+        setAssistantStatus(
+          whatsappWindow
+            ? "Demande enregistrée. Envoyez aussi le message WhatsApp ouvert pour accélérer la réponse."
+            : "Demande enregistrée. Si WhatsApp ne s’est pas ouvert, utilisez le bouton WhatsApp du site.",
+          "success"
+        );
+        button.textContent = "Demande envoyée";
+      } catch (error) {
+        setAssistantStatus(
+          "WhatsApp est ouvert avec votre message. L’enregistrement automatique sera retenté si besoin.",
+          "warning"
+        );
+        button.disabled = false;
+        button.textContent = "Réessayer l’envoi";
+      }
+    });
+    return;
+  }
+
+  const step = assistantSteps[assistantStepIndex];
+  const currentValue = assistantData[step.key] || "";
+  const inputMarkup =
+    step.type === "choices"
+      ? `<div class="assistant-choice-grid">${step.options
+          .map(
+            (option) =>
+              `<button class="${currentValue === option ? "is-selected" : ""}" type="button" data-assistant-choice="${option}">${option}</button>`
+          )
+          .join("")}</div>`
+      : step.type === "textarea"
+        ? `<textarea data-assistant-input rows="4" placeholder="${step.placeholder || ""}">${currentValue}</textarea>`
+        : `<input data-assistant-input type="${step.type}" value="${currentValue}" placeholder="${step.placeholder || ""}" />`;
+
+  body.innerHTML = `
+    <p class="assistant-kicker">Question ${assistantStepIndex + 1} sur ${assistantSteps.length}</p>
+    <h2>${step.title}</h2>
+    <p class="assistant-helper">${step.helper}</p>
+    ${inputMarkup}
+    <div class="assistant-actions">
+      <button class="assistant-secondary" type="button" data-assistant-back ${assistantStepIndex === 0 ? "disabled" : ""}>Retour</button>
+      <button class="assistant-primary" type="button" data-assistant-next>${assistantStepIndex === assistantSteps.length - 1 ? "Voir le résumé" : "Continuer"}</button>
+    </div>
+  `;
+
+  const input = body.querySelector("[data-assistant-input]");
+  const next = body.querySelector("[data-assistant-next]");
+
+  function saveAndContinue() {
+    if (input) {
+      const value = input.value.trim();
+      if (step.required && !value) {
+        setAssistantStatus("Ce champ est nécessaire pour bien qualifier la demande.", "warning");
+        input.focus();
+        return;
+      }
+      assistantData[step.key] = value;
+    }
+    assistantStepIndex += 1;
+    renderAssistantStep();
+  }
+
+  body.querySelectorAll("[data-assistant-choice]").forEach((choice) => {
+    choice.addEventListener("click", () => {
+      assistantData[step.key] = choice.dataset.assistantChoice;
+      assistantStepIndex += 1;
+      renderAssistantStep();
+    });
+  });
+
+  body.querySelector("[data-assistant-back]").addEventListener("click", () => {
+    assistantStepIndex = Math.max(assistantStepIndex - 1, 0);
+    renderAssistantStep();
+  });
+
+  next.addEventListener("click", saveAndContinue);
+  input?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && step.type !== "textarea") {
+      event.preventDefault();
+      saveAndContinue();
+    }
+  });
 }
 
 function getFormData() {
@@ -433,6 +721,9 @@ mobileMenu?.querySelectorAll("a").forEach((link) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     setMobileMenu(false);
+    document.querySelector(".assistant-widget")?.classList.remove("is-open");
+    document.querySelector(".assistant-toggle")?.setAttribute("aria-expanded", "false");
+    document.querySelector(".assistant-panel")?.setAttribute("aria-hidden", "true");
   }
 });
 
@@ -517,6 +808,7 @@ const revealObserver = new IntersectionObserver(
 
 document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
 
+createAssistantWidget();
 updateDefaultLinks();
 updateServicePanel("Plomberie");
 updateProcessSlider(0);
